@@ -1,7 +1,7 @@
 import sys
 import os
 
-# Add server directory to Python path
+# Add server directory to the Python path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 # Now import other modules
@@ -18,7 +18,7 @@ def main():
         http_thread = threading.Thread(target=start_http_server, daemon=True)
         http_thread.start()
 
-        # Start main receiver server
+        # Start the main receiver server
         start_server()
     except KeyboardInterrupt:
         log("Server shutting down...")
