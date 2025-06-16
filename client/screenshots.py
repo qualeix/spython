@@ -49,7 +49,7 @@ def start_screenshot_monitoring():
                 send_screenshot(image_data, timestamp)
                 last_screenshot_hash = current_hash
 
-            # Wait for next capture
+            # Wait for the next capture
             time.sleep(config.SCREENSHOT_INTERVAL)
     except KeyboardInterrupt:
         log("Screenshot monitoring stopped", module="screenshots")

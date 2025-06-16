@@ -1,7 +1,7 @@
 import sys
 import os
 
-# Add client directory to Python path
+# Add client directory to the Python path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 # Now import other modules
@@ -37,7 +37,7 @@ def main():
     # Start cache sync thread
     threading.Thread(target=cache_sync_loop, daemon=True).start()
 
-    # Keep main thread alive
+    # Keep the main thread alive
     try:
         while True:
             time.sleep(1)  # Sleep to reduce CPU usage

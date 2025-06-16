@@ -80,7 +80,7 @@ def on_press(key):
                 106: '*', 107: '+', 109: '-', 110: '[DEL]', 111: '/'
             }
 
-            # First try to get the character representation
+            # First, try to get the character representation
             if key.char:
                 key_str = key.char
             # Then try NumLock ON mapping
