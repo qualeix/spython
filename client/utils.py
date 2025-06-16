@@ -17,8 +17,20 @@ else:
     COLORS["ENDC"] = ""
 
 
-def get_timestamp():
-    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+def get_timestamp(sanitized=False):
+    if not sanitized:
+        # Format: "2025-06-15 18:34:45"
+        return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    else:
+        # Format: "2025-06-15_18-34-45"
+        return datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+
+
+def test(f=False):
+    if not f:
+        print("")
+    else:
+        print("f")
 
 
 def log(message, level="INFO", module=None):

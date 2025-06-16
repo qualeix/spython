@@ -45,8 +45,7 @@ def start_screenshot_monitoring():
             if config.SCREENSHOT_ONLY_ON_CHANGE and current_hash == last_screenshot_hash:
                 log("Screenshot unchanged, skipping", "DEBUG", "screenshots")
             else:
-                # Format: "2025-06-15_18-34-45"
-                timestamp = get_timestamp().replace(" ", "_").replace(":", "-")  # Colon not allowed in filenames
+                timestamp = get_timestamp(sanitized=True)
                 send_screenshot(image_data, timestamp)
                 last_screenshot_hash = current_hash
 

