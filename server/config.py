@@ -5,7 +5,7 @@ ENCRYPTION_KEY = "FfmExgn4kwEc8uxueSOaLsoKYCM1DpQ2GSe6xSdOIfA="  # openssl rand 
 # --- Server settings --- #
 LISTEN_ALL = "0.0.0.0"
 LISTENING_PORT = 43558
-HTTP_PORT = 26954  # To download resources on client's machine
+HTTP_PORT = 26954  # To download tools on client machine
 SOCKET_TIMEOUT = 5  # Connection timeout in seconds
 BUFFER_SIZE = 65536  # Data reception buffer size
                      # 64KB is ideal balance for most systems
