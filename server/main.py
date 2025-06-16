@@ -13,7 +13,6 @@ from upload import start_http_server
 
 def main():
     log("Server starting...")
-
     try:
         # Start HTTP server as separate thread
         http_thread = threading.Thread(target=start_http_server, daemon=True)
