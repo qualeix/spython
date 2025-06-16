@@ -18,10 +18,6 @@ else:
     COLORS["ENDC"] = ""
 
 
-def get_timestamp():
-    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-
 def log(message, level="INFO", module=None):
     """
     Log messages with filtering based on level and module
@@ -51,7 +47,7 @@ def log(message, level="INFO", module=None):
     if module and module in config.SILENT_MODULES:
         return
 
-    timestamp = get_timestamp()
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     module_prefix = f"{module} | " if module else ""
 
     color_prefix = COLORS.get(level, "")
