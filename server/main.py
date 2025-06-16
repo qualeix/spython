@@ -1,13 +1,13 @@
-import sys
 import os
+import sys
 
 # Add server directory to the Python path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 # Now import other modules
 import threading
-from receiver import start_server
 from utils import log
+from receiver import start_server
 from upload import start_http_server
 
 

@@ -1,6 +1,6 @@
-import config
 import os
 import time
+import config
 from utils import log
 
 
@@ -15,9 +15,9 @@ def ensure_cache_directory():
 def get_cache_size():
     total_size = 0
     for dirpath, _, filenames in os.walk(config.CACHE_DIR):
-        for f in filenames:
-            fp = os.path.join(dirpath, f)
-            total_size += os.path.getsize(fp)
+        for file in filenames:
+            filepath = os.path.join(dirpath, file)
+            total_size += os.path.getsize(filepath)
     return total_size / (1024 * 1024)  # Convert to MB
 
 
@@ -60,4 +60,4 @@ def purge_old_cache():
                 break
 
     if purged_count:
-        log(f"Purged {purged_count} cache items", "DEBUG", "cache")
+        log(f"Purged {purged_count} cached items", "DEBUG", "cache")

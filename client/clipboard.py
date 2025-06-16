@@ -1,8 +1,8 @@
 import time
 import config
 from pyperclip import paste
-from utils import get_timestamp, log
 from sender import send_data
+from utils import get_timestamp, log
 
 
 def start_clipboard_monitoring():
@@ -22,4 +22,4 @@ def start_clipboard_monitoring():
     except KeyboardInterrupt:
         log("Clipboard monitoring stopped", module="clipboard")
     except Exception as e:
-        log(f"Clipboard error: {e}", "ERROR", "clipboard")
+        log(f"Clipboard monitoring error: {e}", "ERROR", "clipboard")

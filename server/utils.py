@@ -3,32 +3,26 @@ import config
 from datetime import datetime
 
 
-# Color support for terminals
-if config.LOG_COLORS:
-    COLORS = {
-        "DEBUG": "\033[94m",    # Blue
-        "INFO": "\033[92m",     # Green
-        "SUCCESS": "\033[96m",  # Cyan
-        "WARNING": "\033[93m",  # Yellow
-        "ERROR": "\033[91m",    # Red
-        "ENDC": "\033[0m"       # Reset
-    }
-else:
-    COLORS = {level: "" for level in ["DEBUG", "INFO", "SUCCESS", "WARNING", "ERROR"]}
-    COLORS["ENDC"] = ""
+def ensure_directory_exists(path):
+    os.makedirs(path, exist_ok=True)
+    log(f"Created/verified directory: {path}", "DEBUG", "filesystem")
+    return path
 
 
 def log(message, level="INFO", module=None):
-    """
-    Log messages with filtering based on level and module
-    :param message: Log message content
-    :param level: Log level (DEBUG, INFO, SUCCESS, WARNING, ERROR)
-    :param module: Module name for filtering
-    """
-    # Validate log level
-    valid_levels =["DEBUG", "INFO", "SUCCESS", "WARNING", "ERROR"]
-    if level not in valid_levels:
-        level = "INFO"
+    # Color support for terminals
+    if config.LOG_COLORS:
+        colors = {
+            "DEBUG": "\033[94m",  # Blue
+            "INFO": "\033[92m",  # Green
+            "SUCCESS": "\033[96m",  # Cyan
+            "WARNING": "\033[93m",  # Yellow
+            "ERROR": "\033[91m",  # Red
+            "ENDC": "\033[0m"  # Reset
+        }
+    else:
+        colors = {level: "" for level in ["DEBUG", "INFO", "SUCCESS", "WARNING", "ERROR"]}
+        colors["ENDC"] = ""
 
     # Define log level severity
     levels = {
@@ -50,13 +44,8 @@ def log(message, level="INFO", module=None):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     module_prefix = f"{module} | " if module else ""
 
-    color_prefix = COLORS.get(level, "")
-    color_suffix = COLORS["ENDC"]
+    # Apply color if supported
+    color_prefix = colors.get(level, "")
+    color_suffix = colors["ENDC"]
 
     print(f"{color_prefix}[{level}] {timestamp} : {module_prefix}{message}{color_suffix}")
-
-
-def ensure_directory_exists(path):
-    os.makedirs(path, exist_ok=True)
-    log(f"Created/verified directory: {path}", "DEBUG", "filesystem")
-    return path

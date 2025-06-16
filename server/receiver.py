@@ -1,8 +1,8 @@
-import socket
 import json
+import socket
 import config
-from filesystem import handle_data
 from utils import log
+from filesystem import handle_data
 from decryption import decrypt_data
 
 
@@ -40,7 +40,7 @@ def start_server():
                             raw_data += chunk
 
                         if not raw_data:
-                            log("Empty payload received", "DEBUG", "receiver")
+                            log("Empty payload received", "WARNING", "receiver")
                             continue
 
                         # Handle decryption if needed
@@ -70,7 +70,7 @@ def start_server():
                             except json.JSONDecodeError:
                                 log("Invalid screenshot header", "WARNING", "receiver")
                             except Exception as e:
-                                log(f"Screenshot processing error: {str(e)}", "ERROR", "receiver")
+                                log(f"Screenshot processing error: {e}", "ERROR", "receiver")
                         else:
                             # Regular JSON payload
                             try:
@@ -79,7 +79,7 @@ def start_server():
                             except json.JSONDecodeError:
                                 log("Invalid JSON payload", "WARNING", "receiver")
                             except Exception as e:
-                                log(f"Payload processing error: {str(e)}", "ERROR", "receiver")
+                                log(f"Payload processing error: {e}", "ERROR", "receiver")
 
                     except socket.timeout:
                         log(f"Connection with {client_ip} timed out", "WARNING", "receiver")
@@ -94,6 +94,6 @@ def start_server():
                     log(f"Error accepting connection: {e}", "ERROR", "receiver")
 
         except KeyboardInterrupt:
-            log("Server shutting down...")
+            log("Server shutdown request initiated...", module="receiver")
         except Exception as e:
             log(f"Server runtime error: {e}", "ERROR", "receiver")

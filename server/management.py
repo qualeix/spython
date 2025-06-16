@@ -1,6 +1,6 @@
 import os
-import config
 import time
+import config
 from utils import log
 
 
@@ -16,7 +16,7 @@ def manage_screenshots_storage(client_dir):
                 file_age = current_time - os.path.getmtime(filepath)
                 if file_age > config.SCREENSHOT_RETENTION_DAYS * 86400:
                     os.remove(filepath)
-                    log(f"Purged old screenshot: {filename}", "DEBUG", "filesystem")
+                    log(f"Purged old screenshot: {filename}", "DEBUG", "management")
 
         # 2. Count-based cleanup
         if config.MAX_SCREENSHOTS_PER_CLIENT > 0:
@@ -24,7 +24,7 @@ def manage_screenshots_storage(client_dir):
             while len(screenshots) > config.MAX_SCREENSHOTS_PER_CLIENT:
                 oldest = screenshots.pop(0)
                 os.remove(os.path.join(screenshot_dir, oldest))
-                log(f"Purged excess screenshot: {oldest}", "DEBUG", "filesystem")
+                log(f"Purged excess screenshot: {oldest}", "DEBUG", "management")
 
         # 3. Size-based cleanup
         if config.MAX_SCREENSHOT_DIR_SIZE_MB > 0:
@@ -46,7 +46,7 @@ def manage_screenshots_storage(client_dir):
                     oldest = files.pop(0)
                     os.remove(oldest[0])
                     total_size_mb -= oldest[2] / (1024 * 1024)
-                    log(f"Purged large screenshot: {os.path.basename(oldest[0])}", "DEBUG", "filesystem")
+                    log(f"Purged large screenshot: {os.path.basename(oldest[0])}", "DEBUG", "management")
 
     except Exception as e:
-        log(f"Storage management error: {e}", "ERROR", "filesystem")
+        log(f"Storage management error: {e}", "ERROR", "management")

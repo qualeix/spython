@@ -1,10 +1,10 @@
-import socket
-import json
-import config
 import os
+import json
+import socket
+import config
+from encryption import encrypt_data
 from utils import log, get_timestamp
 from cache import ensure_cache_directory, purge_old_cache
-from encryption import encrypt_data
 
 
 HOST, PORT = config.SERVER_IP, config.SERVER_PORT
@@ -19,7 +19,7 @@ def server_is_online():
     except (socket.timeout, ConnectionRefusedError, OSError):
         return False  # These are expected when offline
     except Exception as e:
-        log(f"Unexpected connectivity error: {e}", "ERROR", "sender")
+        log(f"Unexpected connection error: {e}", "ERROR", "sender")
         return False
 
 
@@ -35,9 +35,9 @@ def send_data(data, data_type):
         if config.USE_ENCRYPTION:
             encrypted = encrypt_data(payload)
             if encrypted is None:
-                log("Skipping send due to encryption failure", "ERROR", "sender")
+                log("Failed to send data due to encryption failure", "ERROR", "sender")
                 return False
-            payload_bytes = b"\x01" + encrypted  # Prepend encryption marker
+            payload_bytes = b"\x01" + encrypted  # Encryption marker
         else:
             payload_bytes = b"\x00" + payload.encode('utf-8')  # Plaintext marker
 
@@ -70,7 +70,7 @@ def send_data(data, data_type):
     except socket.timeout:
         log(f"Connection to server timed out after {config.SOCKET_TIMEOUT}s", "WARNING", "sender")
     except Exception as e:
-        log(f"Network error: {e}", "ERROR", "sender")
+        log(f"Unexpected network error: {e}", "ERROR", "sender")
         return False
 
 
@@ -90,7 +90,7 @@ def send_screenshot(image_data, timestamp):
         if config.USE_ENCRYPTION:
             encrypted = encrypt_data(payload)
             if encrypted is None:
-                log("Skipping screenshot send due to encryption failure", "ERROR", "sender")
+                log("Failed to send data due to encryption failure", "ERROR", "sender")
                 return False
             payload_bytes = b"\x01" + encrypted  # Encryption marker
         else:
@@ -137,7 +137,7 @@ def send_cached_data():
     if not os.path.exists(cache_dir):
         return
 
-    log("Checking for cached data to send...", module="sender")
+    log("Checking for cached data to send...", "DEBUG", "sender")
 
     # Process regular data files first
     for filename in sorted(os.listdir(cache_dir)):

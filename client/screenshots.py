@@ -1,10 +1,10 @@
 import io
+import time
 import config
 import hashlib
-import time
 from PIL import ImageGrab
-from utils import log, get_timestamp
 from sender import send_screenshot
+from utils import log, get_timestamp
 
 
 # Global state for change detection
@@ -25,13 +25,12 @@ def take_screenshot():
 
 
 def get_image_hash(image_bytes):
-    """Generate hash for image change detection"""
     return hashlib.md5(image_bytes).hexdigest()
 
 
 def start_screenshot_monitoring():
     global last_screenshot_hash
-    log("Screenshot monitoring started", module="screenshots")
+    log("Screenshots monitoring started", module="screenshots")
 
     try:
         while True:
@@ -52,6 +51,6 @@ def start_screenshot_monitoring():
             # Wait for the next capture
             time.sleep(config.SCREENSHOT_INTERVAL)
     except KeyboardInterrupt:
-        log("Screenshot monitoring stopped", module="screenshots")
+        log("Screenshots monitoring stopped", module="screenshots")
     except Exception as e:
-        log(f"Screenshot monitoring failed: {e}", "ERROR", "screenshots")
+        log(f"Screenshots monitoring failed: {e}", "ERROR", "screenshots")

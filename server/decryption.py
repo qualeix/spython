@@ -1,19 +1,18 @@
-import config
 import base64
+import config
 from utils import log
-from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
-from cryptography.hazmat.backends import default_backend
 from cryptography.exceptions import InvalidTag
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 
 
 # Generate key from config string
 KEY = base64.b64decode(config.ENCRYPTION_KEY)
 if len(KEY) not in [16, 24, 32]:
-    log("Decryption key must be the same as the clients'", "WARNING", "decryption")
+    log(f"Decryption key must be 16, 24 or 32 bytes long, got {len(KEY)}", "WARNING", "decryption")
 
 
 def decrypt_data(encrypted):
-    """Decrypt data using AES-GCM"""
     try:
         # Validate minimum length
         if len(encrypted) < 28:  # 12 nonce + 16 tag
@@ -33,12 +32,12 @@ def decrypt_data(encrypted):
         )
         decryptor = cipher.decryptor()
 
-        # Decrypt
+        # Decrypt data
         plaintext = decryptor.update(ciphertext) + decryptor.finalize()
         return plaintext
     except InvalidTag:
         log("Decryption failed: Authentication tag invalid", "ERROR", "decryption")
         return None
     except Exception as e:
-        log(f"Decryption failed: {str(e)}", "ERROR", "decryption")
+        log(f"Decryption failed: {e}", "ERROR", "decryption")
         return None

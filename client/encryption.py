@@ -1,9 +1,9 @@
 import os
-import config
 import base64
+import config
 from utils import log
-from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 
 
 # Generate key from config string
@@ -13,7 +13,6 @@ if len(KEY) not in [16, 24, 32]:
 
 
 def encrypt_data(data):
-    """Encrypt data using AES-GCM"""
     try:
         # Generate random nonce
         nonce = os.urandom(12)
@@ -35,5 +34,5 @@ def encrypt_data(data):
         # Return nonce + tag + ciphertext
         return nonce + encryptor.tag + ciphertext
     except Exception as e:
-        log(f"Encryption failed: {str(e)}", "ERROR", "encryption")
+        log(f"Encryption failed: {e}", "ERROR", "encryption")
         return None

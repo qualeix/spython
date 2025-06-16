@@ -1,6 +1,7 @@
 # --- Encryption settings --- #
 USE_ENCRYPTION = True
 ENCRYPTION_KEY = "FfmExgn4kwEc8uxueSOaLsoKYCM1DpQ2GSe6xSdOIfA="  # openssl rand -base64 32
+                                                                 # Must be the same as client's
 
 # --- Server settings --- #
 LISTEN_ALL = "0.0.0.0"
@@ -12,12 +13,16 @@ BUFFER_SIZE = 65536  # Data reception buffer size
 
 # --- Storage settings --- #
 LOOT_DIR = "loot"
-MAX_SCREENSHOTS_PER_CLIENT = 1000  # Every minute that is 1000 minutes, >16hrs
+MAX_SCREENSHOTS_PER_CLIENT = 1000  # With a screenshot every minute,
+                                   # that makes 1000 minutes (~16hrs)
 SCREENSHOT_RETENTION_DAYS = 7
 MAX_SCREENSHOT_DIR_SIZE_MB = 512
 
-
 # --- Logging settings --- #
-LOG_LEVEL = "INFO"  # DEBUG, INFO, SUCCESS, WARNING, ERROR
-SILENT_MODULES = []  # Modules to silence ("receiver", "filesystem" or "decryption)
-LOG_COLORS = True  # Enable colored terminal output
+LOG_LEVEL = "SUCCESS"  # Only show logs equal and above the chosen level. Possible options are:
+                       # "DEBUG", "INFO", "SUCCESS", "WARNING", "ERROR"
+                       # Ex.: "SUCCESS" will only show SUCCESS logs and above, so WARNING and ERROR
+SILENT_MODULES = []  # Choose which logs to silence based on modules. Possible options are:
+                     # "receiver", "filesystem", "management", "decryption" or "upload"
+                     # Ex.: ["filesystem", "decryption"] will silence all logs about filesystem and decryption
+LOG_COLORS = True  # Enable colored terminal output when supported
