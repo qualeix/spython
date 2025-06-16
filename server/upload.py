@@ -17,7 +17,7 @@ class QuietHandler(SimpleHTTPRequestHandler):
 
 def start_http_server():
     """
-    Launches a simple HTTP server for accessing content from tools folder.
+    Launches a simple HTTP server for accessing content from the "tools" folder.
     """
     try:
         # Compute the absolute path to “tools”
@@ -33,7 +33,7 @@ def start_http_server():
 
         # Create and configure server
         httpd = HTTPServer((HOST, HTTP_PORT), handler)
-        httpd.timeout = 1  # Allows for graceful shutdown
+        httpd.timeout = 1  # Allows for a graceful shutdown
         log(f"HTTP server running, serving: {tools_dir[-12:]}")
 
         # Run the server

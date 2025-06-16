@@ -8,7 +8,7 @@ LISTENING_PORT = 43558
 HTTP_PORT = 26954  # To download tools on client machine
 SOCKET_TIMEOUT = 5  # Connection timeout in seconds
 BUFFER_SIZE = 65536  # Data reception buffer size
-                     # 64KB is ideal balance for most systems
+                     # 64KB is an ideal balance for most systems
 
 # --- Storage settings --- #
 LOOT_DIR = "loot"
