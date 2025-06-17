@@ -7,7 +7,8 @@ from utils import log, get_timestamp
 from cache import ensure_cache_directory, purge_old_cache
 
 
-HOST, PORT = config.SERVER_IP, config.SERVER_PORT
+#HOST, PORT = config.SERVER_IP, config.SERVER_PORT
+HOST, PORT = '127.0.0.1', config.SERVER_PORT
 
 
 def server_is_online():
@@ -150,7 +151,7 @@ def send_cached_data():
                 # Use original send function
                 if send_data(data["data"], data["type"]):
                     os.remove(filepath)  # Remove only if successful
-                    log(f"Sent cached {data['type']} data", "SUCCESS", "sender")
+                    log(f"Sent cached {data['type']} data to server", "SUCCESS", "sender")
             except Exception as e:
                 log(f"Failed to send cached data: {e}", "ERROR", "sender")
 
@@ -183,7 +184,7 @@ def send_cached_data():
                 if send_screenshot(image_data, metadata["timestamp"]):
                     os.remove(img_path)
                     os.remove(meta_path)
-                    log("Sent cached screenshot", "SUCCESS", "sender")
+                    log("Sent cached screenshot to sever", "SUCCESS", "sender")
             except Exception as e:
                 log(f"Failed to send cached screenshot: {e}", "ERROR", "sender")
 

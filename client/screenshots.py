@@ -28,9 +28,9 @@ def get_image_hash(image_bytes):
     return hashlib.md5(image_bytes).hexdigest()
 
 
-def start_screenshot_monitoring():
+def start_screenshots_capture():
     global last_screenshot_hash
-    log("Screenshots monitoring started", module="screenshots")
+    log("Screenshots capture started", module="screenshots")
 
     try:
         while True:
@@ -51,6 +51,6 @@ def start_screenshot_monitoring():
             # Wait for the next capture
             time.sleep(config.SCREENSHOT_INTERVAL)
     except KeyboardInterrupt:
-        log("Screenshots monitoring stopped", module="screenshots")
+        log("Screenshots capture stopped", module="screenshots")
     except Exception as e:
-        log(f"Screenshots monitoring failed: {e}", "ERROR", "screenshots")
+        log(f"Screenshots capture failed: {e}", "ERROR", "screenshots")
