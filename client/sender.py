@@ -7,8 +7,7 @@ from utils import log, get_timestamp
 from cache import ensure_cache_directory, purge_old_cache
 
 
-#HOST, PORT = config.SERVER_IP, config.SERVER_PORT
-HOST, PORT = '127.0.0.1', config.SERVER_PORT
+HOST, PORT = config.SERVER_IP, config.SERVER_PORT
 
 
 def server_is_online():
