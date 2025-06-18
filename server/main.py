@@ -1,10 +1,5 @@
 import os
 import sys
-
-# Add server directory to the Python path
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-
-# Now import other modules
 import threading
 from utils import log
 from receiver import start_server
