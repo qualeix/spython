@@ -5,8 +5,7 @@ from utils import log
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
 
-HOST = config.LISTEN_ALL
-HTTP_PORT = config.HTTP_PORT
+HOST, HTTP_PORT = config.LISTEN_ALL, config.HTTP_PORT
 
 
 class QuietHandler(SimpleHTTPRequestHandler):
